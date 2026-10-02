@@ -11,6 +11,8 @@ pub mod rs_count_std;
 pub mod rs_count_asm;
 pub mod rs_count_parallel_asm;
 pub mod rs_count_parallel_max_asm;
+pub mod rs_count_parallel_dynamic_beta;
+pub mod rs_count_dynamic_multithread;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum TaskId {
@@ -18,6 +20,9 @@ pub enum TaskId {
     RsCountAsm,
     RsCountParallelAsm,
     RsCountParallelMax,
+    RsCountParallelDynamicBeta,
+    RsCountParallelDynamicMultithread,
+
 }
 
 impl TaskId {
@@ -26,7 +31,9 @@ impl TaskId {
         Self::RsCountStd,
         Self::RsCountAsm,
         Self::RsCountParallelAsm,
-        Self::RsCountParallelMax
+        Self::RsCountParallelMax,
+        Self::RsCountParallelDynamicBeta,
+        Self::RsCountParallelDynamicMultithread,
     ];
 
     /// Explicit mapping
@@ -36,6 +43,8 @@ impl TaskId {
             Self::RsCountAsm => "RsCountAsm",
             Self::RsCountParallelAsm => "RsCountParallelAsm",
             Self::RsCountParallelMax => "RsCountParallelMax",
+            Self::RsCountParallelDynamicBeta => "RsCountParallelDynamicBeta",
+            Self::RsCountParallelDynamicMultithread => "RsCountParallelDynamicMultithread",
 
         }
     }
@@ -61,5 +70,7 @@ pub fn execute(id: TaskId) -> Result<(), Box<dyn std::error::Error + Send + Sync
         TaskId::RsCountAsm => rs_count_asm::run(),
         TaskId::RsCountParallelAsm => rs_count_parallel_asm::run(),
         TaskId::RsCountParallelMax => rs_count_parallel_max_asm::run(),
+        TaskId::RsCountParallelDynamicBeta => rs_count_parallel_dynamic_beta::run(),
+        TaskId::RsCountParallelDynamicMultithread => rs_count_dynamic_multithread::run(),
     }
 }
